@@ -1,0 +1,22 @@
+#! /bin/sh
+
+if [ $# -eq 1 ]
+then
+  if [ "$1" = "bye" -a -f day.log ] # export to DayOne
+  then
+    detail=`ls -l day.log`
+    date=`echo $detail | cut -d " " -f 6-8`
+    dayone -d="$date" new < day.log
+    rm day.log
+  elif [ "$1" != "bye" ]
+  then
+    if [ -f day.log ]
+    then
+      echo "$1\n" >> day.log
+    else
+      echo "Log\n\n$1\n" > day.log
+    fi
+  fi
+else
+  echo "ERROR: too many/few arguments..."
+fi
